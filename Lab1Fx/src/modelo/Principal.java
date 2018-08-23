@@ -6,55 +6,14 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Principal {
 
-	private ArrayList<Double> numbers;
-	private int rangeHigher;
-	private int rangeLower;
-	private int amountNumbers;
+	
 
 	public Principal() {
-		numbers = new ArrayList<Double>();
+		
 
 	}
 	
-	
-
-	public int getRangeHigher() {
-		return rangeHigher;
-	}
-
-
-
-	public void setRangeHigher(int rangeHigher) {
-		this.rangeHigher = rangeHigher;
-	}
-
-
-
-	public int getRangeLower() {
-		return rangeLower;
-	}
-
-
-
-	public void setRangeLower(int rangeLower) {
-		this.rangeLower = rangeLower;
-	}
-
-
-
-	public int getAmountNumbers() {
-		return amountNumbers;
-	}
-
-
-
-	public void setAmountNumbers(int amountNumbers) {
-		this.amountNumbers = amountNumbers;
-	}
-
-
-
-	public void setNumbers(String cadena) {
+	public void setNumbers(String cadena, ArrayList<Double> numbers) {
 
 		String[] givenNumbers = cadena.split(",");
 
@@ -65,17 +24,14 @@ public class Principal {
 
 	}
 	
-	
-	public ArrayList<Double> getNumbers() {
-		return numbers;
-	}
+
 
 	public int calculatePercent(int amountData, int percent) {
 		
 		return (int)((amountData *percent)/100);
 	}
-	public ArrayList<Double> changeNumbers(ArrayList<Double> numbers,int amountData, int percent) {
-		InsertionUp(numbers);
+	public ArrayList<Double> changeNumbersDouble(ArrayList<Double> numbers,int amountData, int percent) {
+		quickSort(numbers);
 		int totalMess = calculatePercent(amountData, percent);
 		int half=totalMess/2;
 		double current=0;
@@ -87,16 +43,29 @@ public class Principal {
 		return numbers;
 		
 	}
-	
-	public ArrayList<Double> randomInt(int amount, boolean repeated, int LowerIndex, int HighIndex) {
+	public ArrayList<Integer> changeNumbersInt(ArrayList<Integer> numbers,int amountData, int percent) {
+		InsertionUp(numbers);
+		int totalMess = calculatePercent(amountData, percent);
+		int half=totalMess/2;
+		int current=0;
+		for(int i =0;i<totalMess-1;i+=2) {
+			current = numbers.get(i);
+			numbers.set(i, numbers.get(i+1));
+			numbers.set(i+1, current);
+		}
+		return numbers;
 		
-		ArrayList<Double> array = new ArrayList<Double>();
-		double current=0;
+	}
+	
+	public ArrayList<Integer> randomInt(int amount, boolean repeated, int LowerIndex, int HighIndex) {
+		
+		ArrayList<Integer> array = new ArrayList<Integer>();
+		int current=0;
 		for (int i = 0; i < amount; i++) {
 			
 			 current = ThreadLocalRandom.current().nextInt(LowerIndex, HighIndex + 1);
 			 if(!repeated) {
-			 if (!isRepeated(array, current)) {
+			 if (!isRepeatedInteger(array, current)) {
 				 array.add(current);
 		        }
 			 else {
@@ -115,8 +84,36 @@ public class Principal {
 			
 		return array;
 	}
+	
+public ArrayList<Double> randomDouble(int amount, boolean repeated, int LowerIndex, int HighIndex) {
+		
+		ArrayList<Double> array = new ArrayList<Double>();
+		double current=0;
+		for (int i = 0; i < amount; i++) {
+			
+			 current = ThreadLocalRandom.current().nextDouble(LowerIndex, HighIndex + 1);
+			 if(!repeated) {
+			 if (!isRepeatedFloat(array, current)) {
+				 array.add(current);
+		        }
+			 else {
+				 current = ThreadLocalRandom.current().nextDouble(LowerIndex, HighIndex + 1);
+				 array.add(current);
+				 
+			        
+			 }
 			 
-		public boolean isRepeated(ArrayList<Double> array, double num) {
+			 }else {
+				 array.add(current);
+			 }
+		
+			 
+		}
+			
+		return array;
+	}
+			 
+		public boolean isRepeatedFloat(ArrayList<Double> array, double num) {
 			    boolean repeated = false;
 			    for (int i = 0; i < array.size(); i++) {
 			        if (array.get(i) == num) {
@@ -125,6 +122,16 @@ public class Principal {
 			    }
 			    return repeated;
 			}
+		public boolean isRepeatedInteger(ArrayList<Integer> array, double num) {
+		    boolean repeated = false;
+		    for (int i = 0; i < array.size(); i++) {
+		        if (array.get(i) == num) {
+		        	repeated = true;
+		        } 
+		    }
+		    return repeated;
+		}
+	
 	public double randomGenerate(int amount) {
 		
 		double random=((Math.random()*50)+1);
@@ -132,11 +139,11 @@ public class Principal {
 		return random;
 	}
 	
-	public ArrayList<Double> InsertionUp(ArrayList<Double> numbers) {
+	public ArrayList<Integer> InsertionUp(ArrayList<Integer> numbers) {
 		for(int i=1; i<numbers.size();i++) {
 			for(int j=i; j>0&& numbers.get(j-1)>numbers.get(j); j--) {
 				
-				double temp= numbers.get(j);
+				int temp= numbers.get(j);
 				numbers.set(j, numbers.get(j-1));
 				numbers.set(j-1, temp);
 				
@@ -145,33 +152,20 @@ public class Principal {
 		return numbers;
 	}
 	
-	public float[] Insercion(float[] arreglo) {
-		for(int i=1; i<arreglo.length;i++) {
-			
-			for(int j=i; j>0&& arreglo[j-1]>arreglo[j]; j--) {
-				
-				float temp= arreglo[j];
-				arreglo[j]= arreglo[j-1];
-				arreglo[j-1]= temp;
-			}
-		}return arreglo;
-	}
-	
-	
-	
-	
 	public ArrayList<Integer> InsertionDown(ArrayList<Integer> numbers) {
 		for(int i=1; i<numbers.size();i++) {
 			for(int j=i; j>0&& numbers.get(j-1)<numbers.get(j); j--) {
-				Integer  actual=numbers.get(j);
-				Integer  previous=numbers.get(j-1);
-				Integer temp= actual;
-				actual=  previous;
-				previous= temp;
+				
+				int temp= numbers.get(j);
+				numbers.set(j, numbers.get(j-1));
+				numbers.set(j-1, temp);
+				
 			}
 		}
 		return numbers;
 	}
+	
+	
 	
 	
 	 
@@ -278,6 +272,7 @@ public class Principal {
 	    
        public static void main(String[] args) {
     	   Principal principal = new Principal();
+    	   //array double
     	   ArrayList<Double> array = new  ArrayList<Double>();
     	   array.add(5.3);
     	   array.add((double)9);
@@ -290,6 +285,18 @@ public class Principal {
     	   array.add(2.2);
     	   array.add((double)5);
     	   
+    	   //array int
+    	   ArrayList<Integer> array1 = new  ArrayList<Integer>();
+    	   array1.add(500);
+    	   array1.add(9);
+    	   array1.add(1033);
+    	   array1.add(102);
+    	   array1.add(505);
+    	   array1.add(1744);
+    	   array1.add( 1733);
+    	   array1.add(32);
+    	   array1.add(232);
+    	   array1.add(590);
     	   
     	   System.out.println("QUICK");
     	   principal.quickSort(array);
@@ -297,10 +304,11 @@ public class Principal {
     		   System.out.println(array.get(i));
     	   }
     	   
+    	   
     	   System.out.println("\nINSERCION");
-    	   principal.InsertionUp(array);
-    	   for(int i=0;i<array.size();i++) {
-    		   System.out.println(array.get(i));
+    	   principal.InsertionUp(array1);
+    	   for(int i=0;i<array1.size();i++) {
+    		   System.out.println(array1.get(i));
     	   }
     	   
     	   System.out.println("\nHEAPSORT");
@@ -310,18 +318,29 @@ public class Principal {
     	   }
     	   
     	   System.out.println("\nCON ALEATORIOS(heapsort)");
-    	   ArrayList<Double> arrayAle = principal.randomInt(6,false, 1, 9);
+    	   ArrayList<Double> arrayAle = principal.randomDouble(6,false, 1, 9);
     	   principal.heapSort(arrayAle);
     	   for(int i=0;i<arrayAle.size();i++) {
     		   System.out.println(arrayAle.get(i));
     	   }
     	   
-    	   System.out.println("\n% CON INSERCION");
+    	   System.out.println("\n% CON quick");
     	   //principal.InsertionUp(array);
     	   System.out.println("cantidad de numeros desordenados  "+principal.calculatePercent(10, 40));
-    	   for(int i=0;i<principal.changeNumbers(array, 10, 40).size();i++) {
-    		   System.out.println(principal.changeNumbers(array, 10, 40).get(i));
+    	   for(int i=0;i<principal.changeNumbersDouble(array, 10, 40).size();i++) {
+    		   System.out.println(principal.changeNumbersDouble(array, 10, 40).get(i));
     	   }
+    	   
+    	   System.out.println("\n% CON insercion");
+    	   //principal.InsertionUp(array);
+    	   System.out.println("cantidad de numeros desordenados  "+principal.calculatePercent(10, 40));
+    	   for(int i=0;i<principal.changeNumbersInt(array1, 10, 40).size();i++) {
+    		   System.out.println(principal.changeNumbersInt(array1, 10, 40).get(i));
+    	   }
+    	   
+    	   
+    	   
+    	   
     	   
     	   
     	   
