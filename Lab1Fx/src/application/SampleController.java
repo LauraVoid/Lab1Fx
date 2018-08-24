@@ -1,11 +1,13 @@
 package application;
 
 import java.lang.reflect.Array;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
@@ -86,17 +88,32 @@ public class SampleController {
 	@FXML
 	private Slider sliderPercent;
 
+	@FXML
+	private Label valuePercent;
+	
+	
+	  @FXML
+	    private RadioButton acsend;
+
+	    @FXML
+	    private RadioButton descend;
+
 	private Main main;
 
 	public void initialize() {
+		
+		
 		main = new Main();
 		main.setPrincipal(new Principal());
 		clusterToggleButtons();
 		clusterToggleButtons1();
 		clusterToggleButtons2();
 		clusterToggleButtons3();
+		clusterToggleButtons4();
 //    	btPista.setDisable(true);
 //    	btVerMinas.setDisable(true);
+		sliderPercent.setValue(0);
+		valuePercent.textProperty().bindBidirectional(sliderPercent.valueProperty(),NumberFormat.getInstance());
 
 	}
 
@@ -126,14 +143,186 @@ public class SampleController {
 		toggleHeapRandom.setToggleGroup(tg);
 
 	}
-
-	@FXML
-	void butOrdenedRandom(ActionEvent event) {
+	
+	private void clusterToggleButtons4() {
+		ToggleGroup tg = new ToggleGroup();
+		descend.setToggleGroup(tg);
+		acsend.setToggleGroup(tg);
+		
 
 	}
 
 	@FXML
+	void butOrdenedRandom(ActionEvent event) {
+		
+		
+	
+		
+
+	}
+	
+
+	@FXML
 	void butRandom(ActionEvent event) {
+
+		int amount = Integer.parseInt(txtAmount.getText());
+		String[] interval = txtMaxMin.getText().split(",");
+		int max = Integer.parseInt(interval[0]);
+		int min = Integer.parseInt(interval[1]);
+
+		if (toggleInteger.isSelected()) {
+			
+
+			if (toggleRepeated.isSelected()) {
+				ArrayList<Integer> arr = main.getPrincipal().randomInt(amount, true, min, max);
+				if(acsend.isSelected()) {
+					String yy=" ";
+					ArrayList<Integer> ne=main.getPrincipal().InsertionUp(arr);
+					for (int i = 0; i < ne.size(); i++) {
+						yy+=ne.get(i)+", ";
+						
+					}
+					txtRandom.setText(yy);
+					
+					
+					
+				}
+				if(descend.isSelected()) {
+					String yy=" ";
+					ArrayList<Integer> ne=main.getPrincipal().InsertionDown(arr);
+					for (int i = 0; i < ne.size(); i++) {
+						yy+=ne.get(i)+", ";
+						
+					}
+					txtRandom.setText(yy);
+					
+					
+				}
+				
+
+			} else if (toggleNoRepeat.isSelected()) {
+				txtRandom.setText(" ");
+				ArrayList<Integer> arr = main.getPrincipal().randomInt(amount, false, min, max);
+				if(acsend.isSelected()) {
+					String yy=" ";
+					ArrayList<Integer> ne=main.getPrincipal().InsertionUp(arr);
+					for (int i = 0; i < ne.size(); i++) {
+						yy+=ne.get(i)+", ";
+						
+					}
+					txtRandom.setText(yy);
+					
+					
+					
+				}
+				if(descend.isSelected()) {
+					String yy=" ";
+					ArrayList<Integer> ne=main.getPrincipal().InsertionDown(arr);
+					for (int i = 0; i < ne.size(); i++) {
+						yy+=ne.get(i)+", ";
+						
+					}
+					txtRandom.setText(yy);
+					
+					
+				}
+				
+
+			}
+		}
+		
+		else if (toggleD.isSelected()) {
+		
+			txtRandom.setText(" ");
+
+			if (toggleRepeated.isSelected()) {
+				ArrayList<Double> arr = main.getPrincipal().randomDouble(amount, true, min, max);
+				if(acsend.isSelected()) {
+					if(toggleQuickRandom.isSelected()) {
+					String yy=" ";
+					ArrayList<Double> ne=main.getPrincipal().quickSort(arr);
+					for (int i = 0; i < ne.size(); i++) {
+						yy+=ne.get(i)+", ";
+						
+					}
+					
+					txtRandom.setText(yy);
+					}
+					
+					
+					
+				}
+				if(descend.isSelected()) {
+					String yy=" ";
+					txtRandom.setText(yy);
+					
+					
+					
+				}
+				
+
+			}
+		}
+if (toggleInteger.isSelected()) {
+			
+
+			if (toggleRepeated.isSelected()) {
+				ArrayList<Integer> arr = main.getPrincipal().randomInt(amount, true, min, max);
+				if(acsend.isSelected()) {
+					String yy=" ";
+					ArrayList<Integer> ne=main.getPrincipal().InsertionUp(arr);
+					for (int i = 0; i < ne.size(); i++) {
+						yy+=ne.get(i)+", ";
+						
+					}
+					txtRandom.setText(yy);
+					
+					
+					
+				}
+				if(descend.isSelected()) {
+					String yy=" ";
+					ArrayList<Integer> ne=main.getPrincipal().InsertionDown(arr);
+					for (int i = 0; i < ne.size(); i++) {
+						yy+=ne.get(i)+", ";
+						
+					}
+					txtRandom.setText(yy);
+					
+					
+				}
+				
+
+			} else if (toggleNoRepeat.isSelected()) {
+				txtRandom.setText(" ");
+				ArrayList<Integer> arr = main.getPrincipal().randomInt(amount, false, min, max);
+				if(acsend.isSelected()) {
+					String yy=" ";
+					ArrayList<Integer> ne=main.getPrincipal().InsertionUp(arr);
+					for (int i = 0; i < ne.size(); i++) {
+						yy+=ne.get(i)+", ";
+						
+					}
+					txtRandom.setText(yy);
+					
+					
+					
+				}
+				if(descend.isSelected()) {
+					String yy=" ";
+					ArrayList<Integer> ne=main.getPrincipal().InsertionDown(arr);
+					for (int i = 0; i < ne.size(); i++) {
+						yy+=ne.get(i)+", ";
+						
+					}
+					txtRandom.setText(yy);
+					
+					
+				}
+				
+
+			}
+}
 
 	}
 
@@ -215,7 +404,7 @@ public class SampleController {
 		if (main.getPrincipal().verificateIntegerDouble(numbers)) {
 			ArrayList<Double> nn = new ArrayList<Double>();
 			ArrayList<Double> first = main.getPrincipal().setNumbers(numbers, nn);
-			
+
 			if (toggleQuick.isSelected()) {
 				ArrayList<Double> mm = main.getPrincipal().quickSort(first);
 				String num = " ";
@@ -226,15 +415,38 @@ public class SampleController {
 				}
 				txtResult.setText(num);
 
+			} else if (toggleHeap.isSelected()) {
+				ArrayList<Double> mm = main.getPrincipal().heapSort(first);
+				String num = " ";
+				for (int i = 0; i < mm.size(); i++) {
+
+					num += mm.get(i) + ",";
+
+				}
+				txtResult.setText(num);
+
 			}
-			else if(toggleHeap.isSelected()) {
-				
+
+		} else if (main.getPrincipal().verificateIntegerDouble(numbers) == false) {
+			ArrayList<Integer> n = new ArrayList<Integer>();
+			ArrayList<Integer> firs = main.getPrincipal().setNumbersInteger(numbers, n);
+
+			if (toggleInsertion.isSelected()) {
+				ArrayList<Integer> mm = main.getPrincipal().InsertionUp(firs);
+				String num = " ";
+				for (int i = 0; i < mm.size(); i++) {
+
+					num += mm.get(i) + ",";
+
+				}
+				txtResult.setText(num);
+
 			}
+
 		}
+	}
 
 //    ArrayList<Integer> n=main.getPrincipal().verificateIntegerDouble(numbers);
 //    System.out.println(result);
-
-	}
 
 }

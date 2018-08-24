@@ -49,7 +49,7 @@ public class Principal {
 
 	}
 
-	public void setNumbersInteger(String cadena, ArrayList<Integer> numbers) {
+	public ArrayList<Integer>  setNumbersInteger(String cadena, ArrayList<Integer> numbers) {
 
 		String[] givenNumbers = cadena.split(",");
 
@@ -57,7 +57,7 @@ public class Principal {
 			numbers.add(Integer.valueOf(givenNumbers[i]));
 
 		}
-		InsertionUp(numbers);
+		return numbers;
 
 	}
 	public int calculatePercent(int amountData, int percent) {
@@ -99,7 +99,7 @@ public class Principal {
 		int current = 0;
 		for (int i = 0; i < amount; i++) {
 
-			current = ThreadLocalRandom.current().nextInt(LowerIndex, HighIndex + 1);
+			current = ThreadLocalRandom.current().nextInt(LowerIndex, HighIndex);
 			if (!repeated) {
 				if (!isRepeatedInteger(array, current)) {
 					array.add(current);
@@ -153,7 +153,7 @@ public class Principal {
 		return repeated;
 	}
 
-	public boolean isRepeatedInteger(ArrayList<Integer> array, double num) {
+	public boolean isRepeatedInteger(ArrayList<Integer> array, int num) {
 		boolean repeated = false;
 		for (int i = 0; i < array.size(); i++) {
 			if (array.get(i) == num) {
