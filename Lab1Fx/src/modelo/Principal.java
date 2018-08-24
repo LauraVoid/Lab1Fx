@@ -81,6 +81,7 @@ public class Principal {
 
 	public ArrayList<Integer> changeNumbersInt(ArrayList<Integer> numbers, int amountData, int percent) {
 		InsertionUp(numbers);
+		
 		int totalMess = calculatePercent(amountData, percent);
 		int half = totalMess / 2;
 		int current = 0;
