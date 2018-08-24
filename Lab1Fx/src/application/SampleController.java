@@ -97,6 +97,9 @@ public class SampleController {
 
 	    @FXML
 	    private RadioButton descend;
+	    
+	    @FXML
+	    private TextField txtPercent;
 
 	private Main main;
 
@@ -112,8 +115,8 @@ public class SampleController {
 		clusterToggleButtons4();
 //    	btPista.setDisable(true);
 //    	btVerMinas.setDisable(true);
-		sliderPercent.setValue(0);
-		valuePercent.textProperty().bindBidirectional(sliderPercent.valueProperty(),NumberFormat.getInstance());
+//		sliderPercent.setValue(0);
+//		valuePercent.textProperty().bindBidirectional(sliderPercent.valueProperty(),NumberFormat.getInstance());
 
 	}
 
@@ -154,6 +157,26 @@ public class SampleController {
 
 	@FXML
 	void butOrdenedRandom(ActionEvent event) {
+		
+		int amount = Integer.parseInt(txtAmount.getText());
+		String[] interval = txtMaxMin.getText().split(",");
+		int max = Integer.parseInt(interval[0]);
+		int min = Integer.parseInt(interval[1]);
+		int percent= Integer.parseInt(txtPercent.getText());
+		String k="";
+		
+		
+		ArrayList<Integer>t= main.getPrincipal().randomInt(amount, true, min, max);
+		ArrayList<Integer>e=main.getPrincipal().changeNumbersInt(t, t.size(), percent);
+		int pp=main.getPrincipal().calculatePercent(t.size(), percent);
+		ArrayList<Integer>here=main.getPrincipal().changeNumbersInt(e, e.size(), pp);
+		
+		for (int i = 0; i < here.size(); i++) {
+			k+=here.get(i)+", ";
+			
+		}
+		txtRandomPercent.setText(k);
+		
 		
 		
 	
@@ -445,6 +468,11 @@ if (toggleInteger.isSelected()) {
 
 		}
 	}
+
+    @FXML
+    void txtPercent(ActionEvent event) {
+
+    }
 
 //    ArrayList<Integer> n=main.getPrincipal().verificateIntegerDouble(numbers);
 //    System.out.println(result);
