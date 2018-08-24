@@ -155,27 +155,6 @@ public class SampleController {
 	@FXML
 	void butOrdenedRandom(ActionEvent event) {
 		
-		int amount = Integer.parseInt(txtAmount.getText());
-		String num0=valuePercent.getText();
-		double pp= Double.parseDouble(num0);
-		int percent=(int)pp;
-		String[] interval = txtMaxMin.getText().split(",");
-		int max = Integer.parseInt(interval[0]);
-		int min = Integer.parseInt(interval[1]);
-		String val="";
-		
-		ArrayList<Integer> r= main.getPrincipal().randomInt(amount, true, min, max);
-		
-		int numW= main.getPrincipal().calculatePercent(r.size(), percent);
-		
-		ArrayList<Integer> n=main.getPrincipal().changeNumbersInt(r, r.size(), numW);
-		
-		for (int i = 0; i < n.size(); i++) {
-			val+=n.get(i)+"";
-			
-		}
-		txtRandomPercent.setText(val);
-		
 		
 	
 		
